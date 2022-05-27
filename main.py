@@ -1,8 +1,5 @@
-# import random
 import Cartela
 import SorteioNumeros
-
-# import SorteioCartelas
 
 print(" ###################### ")
 print(" ------- BINGO -------- ")
@@ -18,8 +15,6 @@ while x < numero_cartelas:
     x += 1
 
 
-# cartela_escolhida = int(input("Escolha a cartela entre 1 e 10"))
-
 def imprimir_cartelas():
     numero_cartela = 1
     for cartela in todas_cartelas:
@@ -27,11 +22,19 @@ def imprimir_cartelas():
         numero_cartela += 1
 
 
-# imprimir_cartelas()
+imprimir_cartelas()
 
 
 def IniciarBingo():
     rodadas = 0
+    cartelas_vencedoras = []
+
+    def imprimir_resultado():
+        print("======================================")
+        print("Rodada", rodadas)
+        print("Numero Sorteado: ", numerosortiado)
+        imprimir_cartelas()
+        print("======================================")
 
     # Percorre todas as listas enquanto não tem nenhuma ZERADA
     for cart in todas_cartelas:
@@ -45,21 +48,35 @@ def IniciarBingo():
                     if numerosortiado == numero:
                         posicao = cartela.index(numero)
                         cartela[posicao] = 0
-                    # Valida cada cartela somando seus elementos para ver se deu BINGO
-                    for validacaocartela in todas_cartelas:
-                        if sum(validacaocartela) == 0:
-                            print("======================================")
-                            rodadas += 1
-                            print("Rodada", rodadas)
-                            print("Numero Sorteado: ", numerosortiado)
-                            imprimir_cartelas()
-                            print("======================================")
-                            numeros_sorteados_sequencia = SorteioNumeros.numeros_sorteados[:]
-                            numeros_sorteados_sequencia.sort()
-                            return print("A Cartela", todas_cartelas.index(validacaocartela) + 1, "Venceu!",
-                                         "\nNumeros Sorteados por Ordem: ",
-                                         SorteioNumeros.numeros_sorteados, "\nNumeros Sorteados: ",
-                                         numeros_sorteados_sequencia)
+
+            # Valida cada cartela somando seus elementos e salva as cartelas vencedoras em cartelas_vencedoras pelo
+            # numero da Cartela
+            for i, valor in enumerate(todas_cartelas):
+                if sum(valor) == 0:
+                    cartelas_vencedoras.append((i + 1))
+
+            numeros_sorteados_sequencia = SorteioNumeros.numeros_sorteados[:]
+            numeros_sorteados_sequencia.sort()
+
+            # Verificar se teve 1 vencedor
+            if len(cartelas_vencedoras) == 1:
+                rodadas += 1
+                imprimir_resultado()
+
+                return print("A Cartela", cartelas_vencedoras, "Venceu!",
+                             "\nNumeros Sorteados por Ordem: ",
+                             SorteioNumeros.numeros_sorteados, "\nNumeros Sorteados: ",
+                             numeros_sorteados_sequencia)
+
+            # Verifica se houve mais de um vencedor
+            elif len(cartelas_vencedoras) > 1:
+                rodadas += 1
+                imprimir_resultado()
+
+                return print("As Cartelas", cartelas_vencedoras, "Venceram!",
+                             "\nNumeros Sorteados por Ordem: ",
+                             SorteioNumeros.numeros_sorteados, "\nNumeros Sorteados: ",
+                             numeros_sorteados_sequencia)
 
             print("======================================")
 
@@ -68,7 +85,6 @@ def IniciarBingo():
             print("Numero Sorteado: ", numerosortiado)
             imprimir_cartelas()
             print("======================================")
-
 
 
 IniciarBingo()
