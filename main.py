@@ -1,9 +1,7 @@
 import Cartela
 import SorteioNumeros
 
-print(" ###################### ")
-print(" ------- BINGO -------- ")
-print(" ______________________ ")
+print("         BINGO        ")
 
 numero_cartelas = 10
 x = 0
